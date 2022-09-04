@@ -7,7 +7,7 @@ import verifications from "../utils/verifications";
 
 export async function purchaseInPOS(cardId:number,password:string,businessId:number,amount:number){
 
-  const findCard=await verifications(cardId,true,true,true,true)
+  const findCard=await verifications(cardId,true,true,true,true,false)
 
   if (!bcrypt.compareSync(password,findCard.password)) {
     throw {code:'UnprocessableEntity' , message:'incorrect password'}
@@ -18,7 +18,7 @@ export async function purchaseInPOS(cardId:number,password:string,businessId:num
     throw {code:'UnprocessableEntity' , message:'business not found'}
   }
 
-  if(business.type===findCard.type){
+  if(business.type!==findCard.type){
     throw {code:'UnprocessableEntity' , message:'business and card are not the same type'}
   };
 
@@ -35,7 +35,7 @@ export async function purchaseInPOS(cardId:number,password:string,businessId:num
     amount
   }
 
-await insert(dataList)
+ await insert(dataList)
 
 }
 

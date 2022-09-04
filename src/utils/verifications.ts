@@ -2,7 +2,7 @@ import { Card, findByCardId } from "../repositories/cardRepository";
 import dayjs from "dayjs";
 
 
-export default async function verifications(cardId:number,one:boolean,two:boolean,three:boolean,four:boolean){
+export default async function verifications(cardId:number,one:boolean,two:boolean,three:boolean,four:boolean, five:boolean){
   const findCard: Card =  await findByCardId(cardId);
   if(!findCard && one ){
     throw {code:'NotFound' , message:'card not found'}
@@ -19,6 +19,10 @@ export default async function verifications(cardId:number,one:boolean,two:boolea
 
   if(findCard.isBlocked && four){
     throw {code:'Conflict' , message:'card already  blocked'}
+  }
+
+  if(!findCard.isBlocked && five){
+    throw {code:'Conflict' , message:'card already  unlocked'}
   }
 
   return findCard

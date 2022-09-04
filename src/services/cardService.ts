@@ -65,7 +65,7 @@ export async function create(apiKey:string, data:any){
 
 export async function activation(cardId:number,cvc:string,password:string){
 
-  const findCard=await verifications(cardId,true,true,true,false)
+  const findCard=await verifications(cardId,true,false,true,false,false)
 
   if(findCard.password!==null){
     throw {code:'Conflict' , message:'password already registered'}
@@ -85,7 +85,7 @@ export async function activation(cardId:number,cvc:string,password:string){
 }
 
 export async function balanceAndTransactions(cardId:number){
-  await verifications(cardId,true,false,false,false)
+  await verifications(cardId,true,false,false,false,false)
 
 
   const {paymentotal} : {paymentotal:string}= await amountPayment(cardId)
@@ -109,7 +109,7 @@ export async function balanceAndTransactions(cardId:number){
 
 export async function block(cardId:number,password:string){
 
-  const findCard=await verifications(cardId,true,true,false,true)
+  const findCard=await verifications(cardId,true,true,false,true,false)
 
   
   if (!bcrypt.compareSync( password,findCard.password)) {
@@ -122,7 +122,7 @@ export async function block(cardId:number,password:string){
 
 export async function unlock(cardId:number,password:string){
 
-  const findCard=await verifications(cardId,true,true,false,true)
+  const findCard=await verifications(cardId,true,true,false,false,true)
 
   
   if (!bcrypt.compareSync(password,findCard.password)) {
