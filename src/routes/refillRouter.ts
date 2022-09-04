@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { purchaseInPOS } from "../controllers/purchaseController";
+import { refill } from "../controllers/refillController";
+import validateAmount from "../middlewares/validateAmount";
 
-const purchaseRouter = Router();
+const refillRouter = Router();
 
-purchaseRouter.put("/purchase", purchaseInPOS);
+refillRouter.post("/refill", validateAmount, refill);
 
-export default purchaseRouter;
+export default refillRouter;

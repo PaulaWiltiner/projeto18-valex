@@ -1,4 +1,4 @@
-import { connection } from "../config/postgres.js";
+import { connection } from "../config/postgres";
 
 export interface Payment {
   id: number;
@@ -10,7 +10,7 @@ export interface Payment {
 export type PaymentWithBusinessName = Payment & { businessName: string };
 export type PaymentInsertData = Omit<Payment, "id" | "timestamp">;
 
-export async function findByCardId(cardId: number) {
+export async function findByCardIdInPayment(cardId: number) {
   const result = await connection.query<PaymentWithBusinessName, [number]>(
     `SELECT 
       payments.*,
@@ -33,3 +33,16 @@ export async function insert(paymentData: PaymentInsertData) {
     [cardId, businessId, amount]
   );
 }
+
+   export async function amountPayment(cardId: number) {
+    const result = await connection.query(
+      `SELECT 
+      SUM(payments.amount) AS paymenTotal
+        FROM payments 
+        WHERE "cardId"=$1
+      `,
+      [cardId]
+    );
+  
+    return result.rows[0];
+  }

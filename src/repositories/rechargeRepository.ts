@@ -1,4 +1,4 @@
-import { connection } from "../config/postgres.js";
+import { connection } from "../config/postgres";
 
 export interface Recharge {
   id: number;
@@ -8,7 +8,7 @@ export interface Recharge {
 }
 export type RechargeInsertData = Omit<Recharge, "id" | "timestamp">;
 
-export async function findByCardId(cardId: number) {
+export async function findByCardIdInRecharge(cardId: number) {
   const result = await connection.query<Recharge, [number]>(
     `SELECT * FROM recharges WHERE "cardId"=$1`,
     [cardId]
@@ -24,4 +24,17 @@ export async function insert(rechargeData: RechargeInsertData) {
     `INSERT INTO recharges ("cardId", amount) VALUES ($1, $2)`,
     [cardId, amount]
   );
+}
+
+export async function amountRecharge(cardId: number) {
+  const result = await connection.query(
+    `SELECT 
+    SUM(recharges.amount) AS rechargeTotal
+      FROM recharges 
+      WHERE "cardId"=$1
+    `,
+    [cardId]
+  );
+
+  return result.rows[0];
 }

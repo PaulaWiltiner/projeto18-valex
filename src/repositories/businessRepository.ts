@@ -1,5 +1,5 @@
-import { connection } from "../config/postgres.js";
-import { TransactionTypes } from "./cardRepository.js";
+import { connection } from "../config/postgres";
+import { TransactionTypes } from "./cardRepository";
 
 export interface Business {
   id: number;
