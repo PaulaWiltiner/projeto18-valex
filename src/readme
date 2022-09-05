@@ -1,0 +1,55 @@
+// Exemplos de dados enviados pelo body para teste:
+
+Rota: "post /card"
+
+// {
+//   "employeeId": 1,
+//   "type": "restaurant"
+// }
+
+Rota: "put /activation"
+
+// {
+//   "cardId": 1,
+//   "cvc": "377",
+//   "password": "1464"
+// }
+
+Rota: "get /balanceAndTransactions"
+
+// {
+//   "cardId": 8
+// }
+
+
+Rota: "put /block"
+
+// {
+//   "cardId": 1,
+//   "password": "1464"
+// }
+
+Rota: "put /unlock"
+
+// {
+//   "cardId": 1,
+//   "password": "1464"
+// }
+
+Rota: "post /purchase"
+
+// {
+//   "cardId": 1,
+//   "password": "1464",
+//   "businessId": 3,
+//   "amount": 10
+// }
+
+
+Rota: "post /refill"
+
+// {
+//   "cardId": 1,
+//   "amount":125
+// }
+
